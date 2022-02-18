@@ -162,7 +162,7 @@ func getFarsi(finglish string) string {
 		case 'd':
 			farsi += "د"
 		case 'e':
-			farsi += "ع"
+			continue
 		case 'f':
 			farsi += "ف"
 		case 'g':
