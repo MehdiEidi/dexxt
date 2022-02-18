@@ -80,8 +80,8 @@ func (c Chat) String() string {
 	return fmt.Sprintf("(id: %d)", c.Id)
 }
 
-// HandleTelegramWebHook sends a message back to the chat with a punchline starting by the message provided by the user.
-func HandleTelegramWebHook(w http.ResponseWriter, r *http.Request) {
+// Handler sends a message back to the chat with a punchline starting by the message provided by the user.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// Parse incoming request
 	var update, err = parseTelegramRequest(r)
