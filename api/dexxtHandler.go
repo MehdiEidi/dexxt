@@ -91,7 +91,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Send the punchline back to Telegram
-	var telegramResponseBody, errTelegram = sendTextToTelegramChat(update.Message.Chat.Id, "hello")
+	var telegramResponseBody, errTelegram = sendTextToTelegramChat(update.Message.Chat.Id, "hello2")
 	if errTelegram != nil {
 		log.Printf("got error %s from telegram, response body is %s", errTelegram.Error(), telegramResponseBody)
 	} else {
