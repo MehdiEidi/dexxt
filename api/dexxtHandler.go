@@ -199,6 +199,8 @@ func getFarsi(finglish string) string {
 			farsi += "ی"
 		case 'z':
 			farsi += "ز"
+		default:
+			farsi += string(c)
 		}
 	}
 
