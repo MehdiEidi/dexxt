@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // Pass token and sensible APIs through environment variables
@@ -82,7 +83,6 @@ func (c Chat) String() string {
 
 // Handler sends a message back to the chat with a punchline starting by the message provided by the user.
 func Handler(w http.ResponseWriter, r *http.Request) {
-
 	// Parse incoming request
 	var update, err = parseTelegramRequest(r)
 	if err != nil {
@@ -91,7 +91,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Send the punchline back to Telegram
-	var telegramResponseBody, errTelegram = sendTextToTelegramChat(update.Message.Chat.Id, "hello2")
+	var telegramResponseBody, errTelegram = sendTextToTelegramChat(update.Message.Chat.Id, strings.ToLower(update.Message.Text))
 	if errTelegram != nil {
 		log.Printf("got error %s from telegram, response body is %s", errTelegram.Error(), telegramResponseBody)
 	} else {
@@ -114,7 +114,8 @@ func parseTelegramRequest(r *http.Request) (*Update, error) {
 }
 
 // sendTextToTelegramChat sends a text message to the Telegram chat identified by its chat Id
-func sendTextToTelegramChat(chatId int, text string) (string, error) {
+func sendTextToTelegramChat(chatId int, finglish string) (string, error) {
+	text := getFarsi(finglish)
 
 	log.Printf("Sending %s to chat_id: %d", text, chatId)
 	response, err := http.PostForm(
@@ -139,4 +140,67 @@ func sendTextToTelegramChat(chatId int, text string) (string, error) {
 	log.Printf("Body of Telegram Response: %s", bodyString)
 
 	return bodyString, nil
+}
+
+func getFarsi(finglish string) string {
+	var farsi string
+
+	for _, c := range finglish {
+		switch c {
+		case 'a':
+			farsi += "ا"
+		case 'b':
+			farsi += "ب"
+		case 'c':
+			farsi += "س"
+		case 'd':
+			farsi += "د"
+		case 'e':
+			farsi += "ع"
+		case 'f':
+			farsi += "ف"
+		case 'g':
+			farsi += "گ"
+		case 'h':
+			farsi += "ه"
+		case 'i':
+			farsi += "ی"
+		case 'j':
+			farsi += "ج"
+		case 'k':
+			farsi += "ک"
+		case 'l':
+			farsi += "ل"
+		case 'm':
+			farsi += "م"
+		case 'n':
+			farsi += "ن"
+		case 'o':
+			farsi += "و"
+		case 'p':
+			farsi += "پ"
+		case 'q':
+			farsi += "ک"
+		case 'r':
+			farsi += "ر"
+		case 's':
+			farsi += "س"
+		case 't':
+			farsi += "ت"
+		case 'u':
+			farsi += "ی"
+		case 'v':
+			farsi += "و"
+		case 'w':
+			farsi += "و"
+		case 'x':
+			farsi += "خ"
+		case 'y':
+			farsi += "ی"
+		case 'z':
+			farsi += "ز"
+		}
+	}
+
+	return farsi
 }
