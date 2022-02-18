@@ -145,14 +145,18 @@ func sendTextToTelegramChat(chatId int, finglish string) (string, error) {
 func getFarsi(finglish string) string {
 	var farsi string
 
-	for _, c := range finglish {
+	for i, c := range finglish {
 		switch c {
 		case 'a':
 			farsi += "ا"
 		case 'b':
 			farsi += "ب"
 		case 'c':
-			farsi += "س"
+			if peekChar(i, finglish) == "h" {
+				farsi += "چ"
+			} else {
+				farsi += "س"
+			}
 		case 'd':
 			farsi += "د"
 		case 'e':
@@ -160,7 +164,11 @@ func getFarsi(finglish string) string {
 		case 'f':
 			farsi += "ف"
 		case 'g':
-			farsi += "گ"
+			if peekChar(i, finglish) == "h" {
+				farsi += "غ"
+			} else {
+				farsi += "گ"
+			}
 		case 'h':
 			farsi += "ه"
 		case 'i':
@@ -168,7 +176,11 @@ func getFarsi(finglish string) string {
 		case 'j':
 			farsi += "ج"
 		case 'k':
-			farsi += "ک"
+			if peekChar(i, finglish) == "h" {
+				farsi += "خ"
+			} else {
+				farsi += "ک"
+			}
 		case 'l':
 			farsi += "ل"
 		case 'm':
@@ -184,7 +196,11 @@ func getFarsi(finglish string) string {
 		case 'r':
 			farsi += "ر"
 		case 's':
-			farsi += "س"
+			if peekChar(i, finglish) == "h" {
+				farsi += "ش"
+			} else {
+				farsi += "س"
+			}
 		case 't':
 			farsi += "ت"
 		case 'u':
@@ -205,4 +221,11 @@ func getFarsi(finglish string) string {
 	}
 
 	return farsi
+}
+
+func peekChar(index int, str string) string {
+	if index+1 < len(str) {
+		return string(str[index+1])
+	}
+	return ""
 }
