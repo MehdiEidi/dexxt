@@ -84,9 +84,9 @@ func (c Chat) String() string {
 // Handler sends a message back to the chat.
 func Handler(w http.ResponseWriter, r *http.Request) {
 	// Parse incoming request
-	update, err := parseTelegramRequest(r)
+	update, err := parseIncomingRequest(r)
 	if err != nil {
-		log.Printf("error parsing update, %s", err.Error())
+		log.Printf("error parsing incoming update, %s", err.Error())
 		return
 	}
 
@@ -98,8 +98,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// parseTelegramRequest parses incoming update to Update.
-func parseTelegramRequest(r *http.Request) (*Update, error) {
+// parseIncomingRequest parses incoming update to Update.
+func parseIncomingRequest(r *http.Request) (*Update, error) {
 	var update Update
 
 	if err := json.NewDecoder(r.Body).Decode(&update); err != nil {
@@ -131,9 +131,9 @@ func sendToClient(chatID int, finglish string) (string, error) {
 	}
 	defer response.Body.Close()
 
-	body, errRead := io.ReadAll(response.Body)
-	if errRead != nil {
-		log.Printf("error in parsing telegram answer %s", errRead.Error())
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		log.Printf("error in parsing telegram answer %s", err.Error())
 		return "", err
 	}
 
