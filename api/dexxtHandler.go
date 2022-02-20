@@ -116,8 +116,12 @@ func parseIncomingRequest(r *http.Request) (*Update, error) {
 }
 
 // sendToClient sends a text message to the Telegram chat identified by the chat ID.
-func sendToClient(chatID int, finglish string) (string, error) {
-	text := getFarsi(finglish)
+func sendToClient(chatID int, incomingText string) (string, error) {
+	if incomingText == "/start" {
+		return "", nil
+	}
+
+	text := getFarsi(incomingText)
 
 	log.Printf("Sending %s to chat_id: %d", text, chatID)
 
