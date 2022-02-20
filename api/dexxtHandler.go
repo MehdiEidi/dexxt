@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	TELEGRAM_API_BASE_URL            = "https://api.telegram.org/bot"
-	TELEGRAM_API_SEND_MESSAGE        = "/sendMessage"
-	BOT_TOKEN_ENV             string = "TELEGRAM_BOT_TOKEN"
+	TELEGRAM_API_BASE_URL     = "https://api.telegram.org/bot"
+	TELEGRAM_API_SEND_MESSAGE = "/sendMessage"
+	BOT_TOKEN_ENV             = "TELEGRAM_BOT_TOKEN"
 )
 
 var telegramAPI string = TELEGRAM_API_BASE_URL + os.Getenv(BOT_TOKEN_ENV) + TELEGRAM_API_SEND_MESSAGE
