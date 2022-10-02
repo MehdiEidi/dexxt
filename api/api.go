@@ -1,20 +1,22 @@
 package handler
 
 import (
-	"strings"
-	"net/http"
-	"io"
 	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"strings"
 )
 
 func getFarsiAPI(finglish string) (farsi string, err error) {
-
 	body := strings.NewReader(finglish)
+
 	req, err := http.NewRequest("POST", "https://9mkhzfaym3.execute-api.us-east-1.amazonaws.com/production/convert?", body)
 	if err != nil {
 		err = fmt.Errorf("err creating request: %w", err)
 		return
 	}
+
 	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0")
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "en-US,en;q=0.5")
@@ -44,16 +46,13 @@ func getFarsiAPI(finglish string) (farsi string, err error) {
 
 	err = json.Unmarshal(resp_body, &result)
 	if err != nil {
-		err = fmt.Errorf("err unmarshaling response body: %w", err)
+		err = fmt.Errorf("err unMarshaling response body: %w", err)
 		return
 	}
 
-	for k,v := range result {
+	for _, v := range result {
 		farsi += v
 	}
 
 	return
-
-
-
 }

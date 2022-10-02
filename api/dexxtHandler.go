@@ -121,7 +121,10 @@ func sendToClient(chatID int, incomingText string) (string, error) {
 		return "", nil
 	}
 
-	text := getFarsi(incomingText)
+	text, err := getFarsiAPI(incomingText)
+	if err != nil {
+		return "", err
+	}
 
 	log.Printf("Sending %s to chat_id: %d", text, chatID)
 
